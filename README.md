@@ -1,1 +1,1 @@
-# interview_prep
+Solutions for coding interview questions
