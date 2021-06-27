@@ -1,6 +1,7 @@
 import math
 test_list = [1, 5, 8, 9, 11, 13, 15, 21]
 
+# O(logN) runtime
 def binary_search(sorted_list, T):
     R = len(sorted_list) - 1
     L = 0
@@ -30,6 +31,6 @@ def binary_search_recursive(sorted_list, L, R, T):
     else:
         # found element, return index
         return m
-        
+
 print(binary_search_recursive(test_list, 0, len(test_list)-1, 21))
 
