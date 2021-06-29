@@ -5,8 +5,6 @@ Write code to remove duplicates from an unsorted linked list.
 from linked_list import *
 import time
 
-
-
 def remove_dups(llist: LinkedList):
     data = set()
     node = llist.head

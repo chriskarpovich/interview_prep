@@ -33,6 +33,13 @@ class LinkedList:
             self.tail.next = LinkedListNode(value)
             self.tail = self.tail.next
         return self.tail
+    def __len__(self):
+        i = 0
+        node = self.head
+        while node != None:
+            i += 1
+            node = node.next
+        return i
 
     def values(self):
         node = self.head
