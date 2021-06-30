@@ -2,6 +2,8 @@
 LinkedList and LinkedListNode classes.
 """
 
+import random
+
 class LinkedListNode:
     def __init__(self, value, next_node=None, prev_node=None):
         self.value = value
@@ -52,3 +54,7 @@ class LinkedList:
             values.append(node.value)
             node = node.next
         return values
+
+    @classmethod
+    def generate(cls, k, min_value, max_value):
+        return cls(random.choices(range(min_value, max_value), k=k))
