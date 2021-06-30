@@ -41,6 +41,10 @@ class LinkedList:
             node = node.next
         return i
 
+    def __str__(self):
+        values = [str(x) for x in self.values()]
+        return " -> ".join(values)
+
     def values(self):
         node = self.head
         values = []
