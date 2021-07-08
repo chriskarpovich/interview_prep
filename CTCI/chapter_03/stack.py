@@ -22,4 +22,9 @@ class Stack:
     def __bool__(self):
         # lets us use the stack as a conditional
         return bool(self.stack)
+    def isEmpty(self):
+        if self.stack:
+            return False
+        else:
+            return True
 
