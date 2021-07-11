@@ -7,6 +7,22 @@ peek, and isEmpty.
 """
 from stack import Stack
 
+class SortedStack(Stack):
+    def __init__(self):
+        super().__init__()
+        self.temp_stack = Stack()
+
+    def push(self, item):
+        if self.is_empty() or item < self.peek():
+            super().push(item)
+        else:
+            while self.peek() is not None and item > self.peek():
+                self.temp_stack.push(self.pop())
+            super().push(item)
+            while not self.temp_stack.is_empty():
+                super().push(self.temp_stack.pop())
+
+
 def sort_stack(stack):
     
     temp_stack = Stack()

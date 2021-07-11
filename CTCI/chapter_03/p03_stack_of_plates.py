@@ -33,25 +33,45 @@ class SetOfStacks(Stack):
             self.stack.pop()
         return self.stack[-1].pop()
 
+    def pop_at(self, index):
+        # check valid stack index
+        if index >= len(self.stack) or index < 0:
+            return None
+        return_item = self.stack[index].pop()
+        # check if not last stack, which in case we need to shift all items down one to fill hole
+        if index < len(self.stack) - 1:
+            for i in range(index+1, len(self.stack)):
+                temp_stack = Stack()
+                while len(self.stack[i]) > 1:
+                    temp_stack.push(self.stack[i].pop())
+                self.stack[i-1].push(self.stack[i].pop())
+                while not temp_stack.isEmpty():
+                    self.stack[i].push(temp_stack.pop())
+        # check if last stack is empty and pop it if it is
+        if len(self.stack[-1]) == 0:
+            self.stack.pop()
+        return return_item
+                
+
 
 class Tests(unittest.TestCase):
-    def test_stacks(self):
-        stacks = SetOfStacks(5)
-        for i in range(35):
-            stacks.push(i)
-        lst = []
-        for _ in range(35):
-            lst.append(stacks.pop())
-        assert lst == list(reversed(range(35)))
-
-    # def test_pop_at(self):
+    # def test_stacks(self):
     #     stacks = SetOfStacks(5)
     #     for i in range(35):
     #         stacks.push(i)
     #     lst = []
-    #     for _ in range(31):
-    #         lst.append(stacks.pop_at(0))
-    #     assert lst == list(range(4, 35))
+    #     for _ in range(35):
+    #         lst.append(stacks.pop())
+    #     assert lst == list(reversed(range(35)))
+
+    def test_pop_at(self):
+        stacks = SetOfStacks(5)
+        for i in range(35):
+            stacks.push(i)
+        lst = []
+        for _ in range(31):
+            lst.append(stacks.pop_at(0))
+        assert lst == list(range(4, 35))
 
 
 if __name__ == "__main__":
