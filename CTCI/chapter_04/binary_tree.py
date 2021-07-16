@@ -1,8 +1,8 @@
 class Node():
-    def __init__(self, value=None):
+    def __init__(self, value=None, left=None, right=None):
         self.value = value
-        self.left = None
-        self.right = None
+        self.left = left
+        self.right = right
 
     def disp(self, nesting=0):
         indent = " " * nesting * 2
@@ -16,7 +16,7 @@ class Node():
         return output
 
     def __str__(self):
-        return self.disp()
+        return self.value
 class Tree():
     def __init__(self, root=None):
         self.root = root

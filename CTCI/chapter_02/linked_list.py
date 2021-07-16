@@ -55,6 +55,12 @@ class LinkedList:
             node = node.next
         return values
 
+    def __iter__(self):
+        current = self.head
+        while current:
+            yield current
+            current = current.next
+
     @classmethod
     def generate(cls, k, min_value, max_value):
         return cls(random.choices(range(min_value, max_value), k=k))
