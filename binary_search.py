@@ -24,13 +24,13 @@ def binary_search_recursive(sorted_list, L, R, T):
         return -1
     if T < sorted_list[m]:
         # found in left side
-        return binary_search_recursive(sorted_list, L, R-1, T)
+        return binary_search_recursive(sorted_list, L, m-1, T)
     elif T > sorted_list[m]:
         # found in right side
-        return binary_search_recursive(sorted_list, L+1, R, T)
+        return binary_search_recursive(sorted_list, m+1, R, T)
     else:
         # found element, return index
         return m
 
-print(binary_search_recursive(test_list, 0, len(test_list)-1, 21))
+print(binary_search_recursive(test_list, 0, len(test_list)-1, 13))
 
