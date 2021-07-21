@@ -5,8 +5,16 @@ if you cut off the tree at node n, the two trees would be identical.
 """
 from binary_tree import Node, BinaryTree
 
+class ComparableTreeNode(Node):
+    def __eq__(self, other):
+        if not isinstance(other, ComparableTreeNode):
+            return False
+        return (self.value == other.value and self.left == other.left and self.right == other.right)
+
 
 def is_subtree(t1, t2):
+    if not t1 or not t2:
+        return False
     def helper(node1, node2):
         if not node1 and not node2:
             return True
@@ -27,9 +35,24 @@ def is_subtree(t1, t2):
         return traverse(node.left) or traverse(node.right)
     return traverse(t1.root)
 
+def is_subtree_alternate(t1, t2):
+    if not t1 or not t2:
+        return False
+        
+    def helper(node1, node2):
+        if not node1 or not node2:
+            return False
+        print(node1.value, node2.value)
+        if node1 == node2:
+            return True
+        return helper(node1.left, node2) or helper(node1.right, node2)
+    return helper(t1.root, t2.root)
+
+class BinaryTreeAlternative(BinaryTree):
+    NodeCls = ComparableTreeNode
 
 if __name__ == "__main__":
-    t1 = BinaryTree()
+    t1 = BinaryTreeAlternative()
     n1 = t1.insert(1, None)
     n2 = t1.insert(2, n1)
     n3 = t1.insert(3, n1)
@@ -39,10 +62,10 @@ if __name__ == "__main__":
     n8 = t1.insert(8, n4)
     t1.printTree(t1.root)
 
-    t2 = BinaryTree()
+    t2 = BinaryTreeAlternative()
     n40 = t2.insert(4, None)
     n80 = t2.insert(8, n40)
-    n90 = t2.insert(9, n40)
+    #n90 = t2.insert(9, n40)
     t2.printTree(t2.root)
 
-    print(is_subtree(t1, t2))
+    print(is_subtree_alternate(t1, t2))
