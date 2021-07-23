@@ -77,7 +77,7 @@ class BinarySearchTree():
         while curr:
             if query == curr.value:
                 return curr
-            elif query < curr.value:
+            elif query <= curr.value:
                 curr = curr.left
             else:
                 curr = curr.right
