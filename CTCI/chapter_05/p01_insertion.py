@@ -11,7 +11,7 @@ Output:
 """
 
 def bits_insertion(num, m, i, j):
-    # do a linear search through the bits of M (from tail to head, left to right)
+    # do a linear search through the bits of M (from tail to head, right to left)
     # and if you find 1, do a bit insertion to N
     # if you find 0, clear idxth bit of N using a mask
     m_idx = 0
