@@ -65,9 +65,6 @@ def flip_bit_to_win_alt(num):
     return longest
 
 
-
-
-
 test_cases = [(0b0, 1), (0b111, 4), (0b10011100111, 4), (0b11011101111, 8)]
 testable_functions = [flip_bit_to_win, flip_bit_to_win_str]
 
