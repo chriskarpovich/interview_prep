@@ -19,6 +19,7 @@ def conversion_clean(a, b):
     xor = a ^ b
     ct = 0
     # count number of set bits by clearing least significant set bit each iteration
+    # do this by doing xor & (xor - 1)
     while xor != 0:
         xor = xor & (xor - 1) 
         ct += 1
