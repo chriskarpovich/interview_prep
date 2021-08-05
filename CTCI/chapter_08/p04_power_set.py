@@ -9,7 +9,7 @@ def get_subsets_iterative(input_set):
     for i in input_set:
         curr_sets = []
         for j in subsets:
-            new_set = j.copy()
+            new_set = deepcopy(j)
             new_set.add(i)
             curr_sets.append(new_set)
         subsets.extend(curr_sets)
@@ -24,7 +24,7 @@ def get_subsets(input_set):
     prev_subsets = get_subsets(input_set[:-1])
     new_subsets = []
     for prev in prev_subsets:
-        new_set = prev.copy()
+        new_set = deepcopy(prev)
         new_set.append(input_set[-1])
         new_subsets.append(new_set)
     prev_subsets.extend(new_subsets)
