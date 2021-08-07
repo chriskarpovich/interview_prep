@@ -21,5 +21,5 @@ def get_perms(string):
 
 
 if __name__ == "__main__":
-    print(get_perms("abcd"))
-    print(len(get_perms("abcd")))
+    print(get_perms("abc"))
+    print(len(get_perms("abc")))
