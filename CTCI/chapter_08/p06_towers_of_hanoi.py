@@ -81,63 +81,63 @@ they are placed on top of the disk m without violating the rules.
 The base case is to move 0 disks (in steps 1 and 3), that is, do nothing – which obviously doesn't violate the rules.
 """
 
-def towers_recursive(n):
-    A, B, C = [], [], []
-    for i in range(n)[::-1]:
-        A.append(i)
-    def helper(m, n, A, B, C):
-        if m == 0:
-            return
-        helper(m-1, n+1, A, B, C)
-        ind = n - m
-        if n % 2 == 0:
-            if not B or (A and B and A[ind] < B[ind]):
-                B.append(A.pop())
-            elif not A or (A and B and A[ind] > B[ind]):
-                A.append(B.pop())
+# def towers_recursive(n):
+#     A, B, C = [], [], []
+#     for i in range(n)[::-1]:
+#         A.append(i)
+#     def helper(m, n, A, B, C):
+#         if m == 0:
+#             return
+#         helper(m-1, n+1, A, B, C)
+#         ind = n - m
+#         if n % 2 == 0:
+#             if not B or (A and B and A[ind] < B[ind]):
+#                 B.append(A.pop())
+#             elif not A or (A and B and A[ind] > B[ind]):
+#                 A.append(B.pop())
             
-            if len(C) == n:
-                return
+#             if len(C) == n:
+#                 return
 
                 
-            if not C or (A and C and A[ind] < C[ind]):
-                C.append(A.pop())
-            elif not A or (A and C and A[ind] > C[ind]):
-                A.append(C.pop())
+#             if not C or (A and C and A[ind] < C[ind]):
+#                 C.append(A.pop())
+#             elif not A or (A and C and A[ind] > C[ind]):
+#                 A.append(C.pop())
 
-            if len(C) == n:
-                return
+#             if len(C) == n:
+#                 return
 
-        else:
-            if not C or (A and C and A[ind] < C[ind]):
-                C.append(A.pop())
-            elif not A or (A and C and A[ind] > C[ind]):
-                A.append(C.pop())
+#         else:
+#             if not C or (A and C and A[ind] < C[ind]):
+#                 C.append(A.pop())
+#             elif not A or (A and C and A[ind] > C[ind]):
+#                 A.append(C.pop())
 
-            if len(C) == n:
-                return
+#             if len(C) == n:
+#                 return
 
 
-            if not B or (A and B and A[-1] < B[-1]):
-                B.append(A.pop())
-            elif not A or (A and B and A[-1] > B[-1]):
-                A.append(B.pop())
+#             if not B or (A and B and A[-1] < B[-1]):
+#                 B.append(A.pop())
+#             elif not A or (A and B and A[-1] > B[-1]):
+#                 A.append(B.pop())
 
-            if len(C) == n:
-                return
+#             if len(C) == n:
+#                 return
 
         
-        if not B or (B and C and C[-1] < B[-1]):
-            B.append(C.pop())
-        elif not C or (B and C and C[-1] > B[-1]):
-            C.append(B.pop())
+#         if not B or (B and C and C[-1] < B[-1]):
+#             B.append(C.pop())
+#         elif not C or (B and C and C[-1] > B[-1]):
+#             C.append(B.pop())
 
 
         
 
 def example():
     n = 5
-    A, B, C = towers_recursive(n)
+    A, B, C = towers(n)
     print(A)
     print(B)
     print(C)
