@@ -55,7 +55,7 @@ class TestSuite(unittest.TestCase):
 
 
 def example():
-    print(generate_parentheses_permutations_recursive_1(0))
+    print(generate_parentheses_permutations_recursive_1(3))
     #print(generate_parentheses_permutations_brute_force(3))
     #print(generate_parentheses_permutations_recursive_2(3))
 
