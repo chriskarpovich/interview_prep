@@ -46,11 +46,13 @@ def tallest_stack(boxes):
             return helper(boxes, i+1, prev_i, memo, total_height)
 
     memo = [-1 for _ in range(len(boxes))]
+    # traverse boxes in descending order
     boxes = sorted(boxes, key = lambda x: x.height, reverse=True)
     max_height = 0
     for i in range(len(boxes)):
         max_height = max(max_height, helper(boxes, i+1, i, memo, total_height=boxes[i].height))
     return max_height
+
 
 class TestSuite(unittest.TestCase):
     def test_null(self):
