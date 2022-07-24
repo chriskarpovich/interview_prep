@@ -2,30 +2,23 @@
 # If the compressed string would not become smaller than the original it should return the original. Assume upper/lower letters only.
 
 def string_compression(string: str) -> str:
-    
-    counter = 0
+    i = 0
     result = []
-    last_char = None
-    for ind in range(len(string)):
-        if ind == 0:
-            last_char = string[0]
-        if last_char != string[ind]:
-            result.append(last_char)
-            result.append(str(counter))
-            last_char = string[ind]
-            counter = 0
-        counter += 1
-    if counter > 0:
-        result.append(last_char)
-        result.append(str(counter))
+    while i < len(string):
+        result.append(string[i])
+        j = i + 1
+        ct = 1
+        while j < len(string) and string[j] == string[i]:
+            ct += 1
+            j += 1
+        result.append(str(ct))
+        i = j
 
-    
-    return_str = "".join(result)
-    print(return_str)
-    if len(return_str) < len(string): 
-        return return_str
+    if len(result) < len(string):
+        return "".join(result)
     else:
         return string
+
 def main():
     test_cases = [
         ("aabcccccaaa", "a2b1c5a3"),

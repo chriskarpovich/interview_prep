@@ -1,33 +1,62 @@
 # Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to zero
 from copy import deepcopy
+from re import L
 
-def zero_matrix(mat):
+from p07_rotate_matrix import print_matrix
+
+def zero_matrix_bad(mat):
+    # O(M+N) space solution
     rows = len(mat)
     cols = len(mat[0])
+    r = [0 for _ in range(rows)]
+    c = [0 for _ in range(cols)]
 
-    rows_to_zero, cols_to_zero = [], []
     for i in range(rows):
         for j in range(cols):
             if mat[i][j] == 0:
-                rows_to_zero.append(i)
-                cols_to_zero.append(j)
-    rows_to_zero = list(set(rows_to_zero))
-    cols_to_zero = list(set(cols_to_zero))
-
-    # new_mat = [[0 for _ in range(cols)]] * rows
-
-    # for i in range(rows):
-    #     for j in range(cols):
-    #         if i not in rows_to_zero and j not in cols_to_zero:
-    #             new_mat[i][j] = mat[i][j]
-
-    # without making a new matrix:
+                r[i] = 1
+                c[j] = 1
     for i in range(rows):
         for j in range(cols):
-            if i in rows_to_zero or j in cols_to_zero:
+            if r[i] == 1 or c[j] == 1:
                 mat[i][j] = 0
+    return mat
+
+
+def zero_matrix_opt(mat):
+    # O(1) space, two-pass solution
+    # store states in first element of row/col and check those to see if they should be zeroed
+    # need to keep track if first row and/or first col need to be zeroed out as well, because
+    # putting a zero in the first row/col will make it look like that row/col needs to be zeroed
+    # but it may not need to be.
+    rows = len(mat)
+    cols = len(mat[0])
+    firstRow = False
+    firstCol = False
+
+    for i in range(rows):
+        for j in range(cols):
+            if mat[i][j] == 0:
+                if i == 0:
+                    firstRow = True
+                if j == 0:
+                    firstCol = True
+                mat[0][j] = 0
+                mat[i][0] = 0
+    for i in range(1, rows):
+        for j in range(1, cols):
+            # don't iterate through first row or col
+            if mat[i][0] == 0 or mat[0][j] == 0:
+                mat[i][j] = 0
+    if firstRow:
+        for j in range(cols):
+            mat[0][j] = 0
+    if firstCol:
+        for i in range(rows):
+            mat[i][0] = 0
 
     return mat
+    
 
 
 def main():
@@ -51,8 +80,10 @@ def main():
     ]
 
     for [test_matrix, expected] in test_cases:
-        test_matrix = deepcopy(test_matrix)
-        assert zero_matrix(test_matrix) == expected
+        test_1 = deepcopy(test_matrix)
+        assert zero_matrix_bad(test_1) == expected
+        test_2 = deepcopy(test_matrix)
+        assert zero_matrix_opt(test_2) == expected
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()

@@ -5,14 +5,13 @@ def urlify(string: str, length: int) -> str:
     return string.rstrip().replace(" ", "%20")
 
 def urlify_new_string(string, length):
-
-    string_arr = [None] * length
-    for ind in range(length):
-        if string[ind] == " ":
-            string_arr[ind] = "%20"
+    new_str = []
+    for char in string.rstrip():
+        if char == " ":
+            new_str.append("%20")
         else:
-            string_arr[ind] = string[ind]
-    return ''.join([str(elem) for elem in string_arr])
+            new_str.append(char)
+    return "".join(new_str)
 
 
 def main():

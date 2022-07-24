@@ -1,6 +1,5 @@
 # Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees.
 # Can you do this in place?
-import math
 from copy import deepcopy
 
 def print_matrix(mat):
@@ -8,43 +7,56 @@ def print_matrix(mat):
         print(x)
     print('---')
 
-def rotate_matrix(mat):
-    # rotate like a ring
-    # top = 0
-    # bottom = len(mat) - 1
-    # left = 0
-    # right = len(mat[0]) - 1
+def rotate_matrix_transpose(mat):
+    rows = len(mat)
+    cols = len(mat[0])
 
-    new_mat = [[0 for _ in range(len(mat[0]))] for _ in range(len(mat))]
-    # iterate through top, bottom, left, right
-    for top, bottom, left, right in zip(range(math.ceil(len(mat) / 2)), reversed(range(math.floor(len(mat) / 2), len(mat))), range(math.ceil(len(mat[0]) / 2)), reversed(range(math.floor(len(mat[0]) / 2), len(mat[0])))):
-        # rows
-        print(top, bottom, left, right)
-        for i, j in zip(range(top, bottom + 1), reversed(range(left, right + 1))):
-            # set top row of new matrix to be left column of old matrix
-            new_mat[top][j] = mat[i][left]
-        for i, j in zip(range(top, bottom + 1), range(left, right + 1)):
-            # set right column of new matrix to be top row of old matrix
-            new_mat[i][right] = mat[top][j]
-        for i, j in zip(reversed(range(top, bottom + 1)), range(left, right + 1)):
-            # set bottom row of new matrix to be right column of old matrix
-            new_mat[bottom][j] = mat[i][right]
-        for i, j in zip(reversed(range(top, bottom + 1)), reversed(range(left, right + 1))):
-            # set left column of new matrix to be bottom row of old matrix
-            new_mat[i][left] = mat[bottom][j]
-        print_matrix(new_mat)
-    return(new_mat)
+    # transpose matrix
+    for i in range(rows):
+        for j in range(i, cols):
+            mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
+    # reverse rows
+    for i in range(rows):
+        mat[i].reverse()
+    return mat
 
-def rotate_matrix_pythonic(matrix):
-    """rotates a matrix 90 degrees clockwise"""
-    n = len(matrix)
-    result = [[0] * n for i in range(n)]  # empty list of 0s
-    for i, j in zip(range(n), range(n - 1, -1, -1)):  # i counts up, j counts down
-        for k in range(n):
-            result[k][i] = matrix[j][k]
-        print(i, j)
-        print_matrix(result)
-    return result
+def rotate_matrix_swap(mat):
+    rows = len(mat)
+    cols = len(mat[0])
+
+    # transpose matrix
+    for i in range(rows):
+        for j in range(i, cols):
+            mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
+    # swap cols
+    for i in range(rows):
+        for j in range(cols // 2):
+            mat[i][j], mat[i][cols-j-1] = mat[i][cols-j-1], mat[i][j]
+    return mat
+
+def rotate_matrix_iter(mat):
+    rows = len(mat)
+    cols = len(mat[0])
+
+    l, r = 0, cols-1
+    top, bottom = 0, rows-1
+
+    while l < r:
+        for i in range(r-l):
+            top, bottom = l, r
+            top_left = mat[top][l + i]
+            mat[top][l + i] = mat[bottom - i][l]
+            mat[bottom - i][l] = mat[bottom][r - i]
+            mat[bottom][r - i] = mat[top + i][r]
+            mat[top + i][r] = top_left
+        # top += 1
+        # bottom -= 1
+        l += 1
+        r -= 1
+    return mat
+    
+
+
 
 
 def main():
@@ -74,8 +86,12 @@ def main():
         ),
     ]
     for [test_matrix, expected] in test_cases:
-        test_matrix = deepcopy(test_matrix)
-        assert rotate_matrix_pythonic(test_matrix) == expected
+        test_1 = deepcopy(test_matrix)
+        assert rotate_matrix_transpose(test_1) == expected
+        test_2 = deepcopy(test_matrix)
+        assert rotate_matrix_swap(test_2) == expected
+        test_3 = deepcopy(test_matrix)
+        assert rotate_matrix_iter(test_3) == expected
 
 if __name__ == "__main__":
     main()

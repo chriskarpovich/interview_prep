@@ -1,54 +1,31 @@
 # Can insert, remove or replace character in string. Given two strings, write a function to check if they are one edit (or zero edits) away
-
 def one_away(str1: str, str2: str) -> bool:
-    if str1 == str2:
-        return True
-    # check if they differ by more than one character
-    elif abs(len(str1) - len(str2)) > 1:
+    if abs(len(str1) - len(str2)) > 1:
         return False
-
-    # substitution of a character
-    if len(str1) == len(str2):
-        wrong = 0
-        for ind in range(len(str1)):
-            if str1[ind] != str2[ind]:
-                wrong += 1
-        if wrong > 1:
-            return False
-        else:
-            return True
-    
-    # insertion/deletion of a character
+    i = j = 0
     if len(str1) > len(str2):
-        print(str1, str2)
-        i, j = 0, 0
-        edited = False
-        while i < len(str1) and j < len(str2):
-            if str1[i] == str2[j]:
+        shorter = str2
+        longer = str1
+    else:
+        shorter = str1
+        longer = str2
+    edited = False
+    while i < len(longer) and j < len(shorter):
+        if longer[i] != shorter[j]:
+            if edited:
+                return False
+            edited = True
+            if len(longer) != len(shorter):
                 i += 1
-                j += 1
             else:
                 i += 1
-                if edited:
-                    return False
-                edited = True
-        return True
+                j += 1
+        else:
+            i += 1
+            j += 1
 
-    elif len(str2) > len(str1):
-        print(str1, str2)
-        i, j = 0, 0
-        edited = False
-        while i < len(str2) and j < len(str1):
-            if str2[i] == str1[j]:
-                i += 1
-                j += 1
-            else:
-                i += 1
-                if edited:
-                    return False
-                edited = True
-        return True
-        
+    return True
+
 
 
             

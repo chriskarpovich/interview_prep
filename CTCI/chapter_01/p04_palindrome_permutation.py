@@ -5,18 +5,22 @@
 # aaabaaa -> a: 6, b: 1
 
 def palindrome_permute(string: str) -> bool:
+    # don't consider whitespace or uppercase
+    # all even or all even + 1 odd to be a permutation of a palindrome
+    char_ct = dict()
     string = string.lower().replace(" ", "")
-    char_dict = {}
     for char in string:
-        if char not in char_dict:
-            char_dict[char] = 1
-        else:
-            char_dict[char] += 1
-
-    if len([x for x in char_dict.values() if x % 2 != 0]) <= 1:
-        return True
-    else:
-        return False
+        if char not in char_ct:
+            char_ct[char] = 0
+        char_ct[char] += 1
+    seen_odd = False
+    for key in char_ct:
+        if char_ct[key] % 2 != 0:
+            if not seen_odd:
+                seen_odd = True
+            else:
+                return False
+    return True
 
 
 def main():

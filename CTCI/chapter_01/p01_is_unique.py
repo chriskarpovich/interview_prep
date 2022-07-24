@@ -1,17 +1,14 @@
 # Algorithm to determine if string has all unique characters
 
 def is_unique(string: str) -> bool:
-    if len(set(string)) == len(string):
-        return True
-    else:
-        return False
+    return len(set(string)) == len(string)
 
 def is_unique_dictionary(string: str) -> bool:
-    char_dict = {}
+    seen = dict()
     for char in string:
-        if char in char_dict:
+        if char in seen:
             return False
-        char_dict[char] = 1
+        seen[char] = char
     return True
 
 def main():
