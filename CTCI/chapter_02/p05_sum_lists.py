@@ -14,41 +14,7 @@ Output: (9->1->2)
 from linked_list import *
 
 def sum_lists(ll_a, ll_b, reverse = False):
-    ll_sum = LinkedList()
-    if reverse:
-        ll_a = reverse_ll(ll_a)
-        ll_b = reverse_ll(ll_b)
-    node_1 = ll_a.head
-    node_2 = ll_b.head
-    carry_over = 0
-    while node_1 is not None or node_2 is not None:
-        if node_1 is None:
-            node_1_value = 0
-        else:
-            node_1_value = node_1.value
-        if node_2 is None:
-            node_2_value = 0
-        else:
-            node_2_value = node_2.value
-        val_sum = node_1_value + node_2_value + carry_over
-        if val_sum < 10:
-            ll_sum.add(val_sum)
-            carry_over = 0
-        else:
-            ll_sum.add(val_sum % 10)
-            carry_over = 1
-        if node_1 is not None:
-            node_1 = node_1.next
-        if node_2 is not None:
-            node_2 = node_2.next
-    if reverse:
-        ll_sum = reverse_ll(ll_sum)
-    return ll_sum
-        
-def reverse_ll(ll):
-    values = ll.values()[::-1]
-    ll_rev = LinkedList(values)
-    return ll_rev
+    pass
 
 
 def main():

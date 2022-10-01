@@ -9,41 +9,18 @@ class BinaryNode:
         self.left = None
         self.right = None
 
-def check_balanced_parent(root):
-    difference_list = []
-    def check_balanced(root, difference_list):
-        # try DFS for each node in tree
-        if root == None:
-            return 0
-        left_depth = check_balanced(root.left, difference_list)
-        right_depth = check_balanced(root.right, difference_list)
-        difference_list.append(abs(left_depth-right_depth))
-        return max(left_depth, right_depth)+1
-    check_balanced(root, difference_list)
-    if any(x > 1 for x in difference_list):
-        return False
-    else:
-        return True
-def check_balanced_parent_2(root):
-    def check_balanced_2(root):
-        # try DFS for each node in tree
-        if root == None:
-            return (True, 0)
-        is_balanced_left, left_depth = check_balanced_2(root.left)
-        is_balanced_right, right_depth = check_balanced_2(root.right)
-        height = max(left_depth, right_depth)+1
-        diff = abs(left_depth - right_depth)
-
-        if not(is_balanced_left and is_balanced_right) or diff > 1:
-            return (False, height)
-        else:
-            return (True, height)
-    cond, height = check_balanced_2(root)
-    return cond
-
-
-
-
+def check_balanced(node):
+    def dfs(node):
+        if not node:
+            return 0, True
+        left, left_balanced = dfs(node.left)
+        right, right_balanced = dfs(node.right)
+        balanced = True
+        if not left_balanced or not right_balanced or abs(left - right) > 1:
+            balanced = False
+        return max(left, right) + 1, balanced
+    _, balanced = dfs(node)
+    return balanced
 
 def _gen_balanced_1():
     root = BinaryNode(1)
@@ -100,14 +77,16 @@ test_cases = [
 ]
 
 #testable_functions = [is_balanced_v1, is_balanced_v2]
-testable_functions = [check_balanced_parent, check_balanced_parent_2]
+testable_functions = [check_balanced]
 
 
 def test_is_balanced():
     for tree_gen, expected in test_cases:
         for is_balanced in testable_functions:
             error_msg = f"{is_balanced.__name__} failed on {tree_gen.__name__}"
-            assert is_balanced(tree_gen()) == expected, error_msg
+            res = is_balanced(tree_gen())
+            print(expected, res)
+            assert res == expected, error_msg
 
 
 if __name__ == "__main__":

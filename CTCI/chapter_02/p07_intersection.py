@@ -6,38 +6,7 @@ node of the second linked list, then they are intersecting.
 from linked_list import *
 
 def intersection(ll1, ll2):
-    node1 = ll1.head
-    node2 = ll2.head
-    runner1 = ll1.head
-    # have runner go along ll1 and compare against each element of ll2
-    # only need to compare len(smaller_list) nodes for intersection
-    while node2 != None:
-        runner1 = node1
-        while runner1 != None:
-            if node2 == runner1:
-                # return intersecting node
-                return node2
-            runner1 = runner1.next
-        node2 = node2.next
-    return None
-
-def intersection_smaller(ll1, ll2):
-    smaller_list = ll1 if len(ll1) < len(ll2) else ll2
-    larger_list = ll1 if len(ll1) > len(ll2) else ll2
-
-    diff = len(larger_list) - len(smaller_list)
-    large_node = larger_list.head
-    small_node = smaller_list.head
-    # advance large list to size of small list
-    for _ in range(diff):
-        large_node = large_node.next
-
-    while large_node != None and small_node != None:
-        if large_node == small_node:
-            return large_node
-        large_node = large_node.next
-        small_node = small_node.next
-    return None
+    pass
     
         
         

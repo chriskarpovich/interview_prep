@@ -9,29 +9,7 @@ returns C
 from linked_list import *
 
 def loop_detection_easy(ll):
-    if ll.tail == None or ll.tail.next == None:
-        return None
-    else:
-        return ll.tail.next
-
-def loop_detection(ll):
-    fast = slow = ll.head
-
-    while fast and fast.next:
-        fast = fast.next.next
-        slow = slow.next
-        if fast is slow:
-            break
-
-    if fast is None or fast.next is None:
-        return None
-
-    slow = ll.head
-    while fast is not slow:
-        fast = fast.next
-        slow = slow.next
-
-    return fast
+    pass
 
 
 def main():

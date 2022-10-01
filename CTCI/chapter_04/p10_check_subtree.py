@@ -12,41 +12,6 @@ class ComparableTreeNode(Node):
         return (self.value == other.value and self.left == other.left and self.right == other.right)
 
 
-def is_subtree(t1, t2):
-    if not t1 or not t2:
-        return False
-    def helper(node1, node2):
-        if not node1 and not node2:
-            return True
-        if not node1 or not node2:
-            return False
-        # check if nodes are equal and their left and right subchildren are equal
-        good = False
-        if node1.value == node2.value:
-            good = True
-        return good and helper(node1.left, node2.left) and helper(node1.right, node2.right)
-    # search every node in larger tree as starting point?
-    def traverse(node):
-        if node == None:
-            return False
-        # visit node
-        if helper(node, t2.root):
-            return True
-        return traverse(node.left) or traverse(node.right)
-    return traverse(t1.root)
-
-def is_subtree_alternate(t1, t2):
-    if not t1 or not t2:
-        return False
-        
-    def helper(node1, node2):
-        if not node1 or not node2:
-            return False
-        print(node1.value, node2.value)
-        if node1 == node2:
-            return True
-        return helper(node1.left, node2) or helper(node1.right, node2)
-    return helper(t1.root, t2.root)
 
 class BinaryTreeAlternative(BinaryTree):
     NodeCls = ComparableTreeNode

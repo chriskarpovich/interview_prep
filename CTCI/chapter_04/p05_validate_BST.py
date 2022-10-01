@@ -4,53 +4,25 @@ Implement a function to check if a binary tree is a BST.
 
 from binary_tree import BinarySearchTree, BinaryTree
 
-def is_binary_search_tree(tree):
-    root = tree.root
-    if not root:
-        return False
-
-    def helper(node):
-        if not node:
-            return (True, [])
-
-        cond_left, all_left = helper(node.left)
-        cond_right, all_right = helper(node.right)
-        
-        if (cond_left and cond_right):
-            if all_left and all_right:
-                if all(x <= node.value for x in all_left) and all(x > node.value for x in all_right):
-                    return (True, all_left+all_right+[node.value])
-                else:
-                    return (False, all_left+all_right+[node.value])
-            elif all_left:
-                if all(x <= node.value for x in all_left):
-                    return (True, all_left+[node.value])
-                else:
-                    (False, all_left+[node.value])
-            elif all_right:
-                if all(x > node.value for x in all_right):
-                    return (True, all_right+[node.value])
-                else:
-                    return (False, all_right+[node.value])
-            else:
-                return (True, [node.value])
-        else:
-            return (False, all_left+all_right+[node.value])
-    cond, values = helper(root)
-    return cond
+# def is_binary_search_tree_concise(tree):
+#     node = tree.root
+#     def dfs(node, minVal, maxVal):
+#         if not node:
+#             return True
+#         # if we go left, then node.value becomes maxVal. if we go right, then node.value becomes minVal
+#         return node.value > minVal and node.value < maxVal and dfs(node.left, minVal, node.value) and dfs(node.right, node.value, maxVal)
+#     return dfs(node, float("-inf"), float("inf"))
 
 def is_binary_search_tree_concise(tree):
-    return _is_bst(tree.root)
-
-
-def _is_bst(node, min_val=None, max_val=None):
-    if not node:
-        return True
-    if (min_val and node.value < min_val) or (max_val and node.value >= max_val):
-        return False
-    return _is_bst(node.left, min_val, node.value) and _is_bst(node.right, node.value, max_val)
-        
-
+    node = tree.root
+    def dfs(node, minVal, maxVal):
+        if not node:
+            return True
+        if (minVal and node.value <= minVal) or (maxVal and node.value >= maxVal):
+            return False
+        # if we go left, then node.value becomes maxVal. if we go right, then node.value becomes minVal
+        return dfs(node.left, minVal, node.value) and dfs(node.right, node.value, maxVal)
+    return dfs(node, None, None)
 
 
 def test_is_binary_search_tree():

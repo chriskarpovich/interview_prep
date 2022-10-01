@@ -5,62 +5,28 @@ peek, and isEmpty.
 
 4, 2, 5, 1, 3 --> 1, 2, 3, 4, 5
 """
-from stack import Stack
-
-class SortedStack(Stack):
-    def __init__(self):
-        super().__init__()
-        self.temp_stack = Stack()
-
-    def push(self, item):
-        if self.is_empty() or item < self.peek():
-            super().push(item)
-        else:
-            while self.peek() is not None and item > self.peek():
-                self.temp_stack.push(self.pop())
-            super().push(item)
-            while not self.temp_stack.is_empty():
-                super().push(self.temp_stack.pop())
-
-
 def sort_stack(stack):
+    temp = []
+    while stack:
+        val = stack.pop()
+        while temp and val < temp[-1]:
+            stack.append(temp.pop())
+        temp.append(val)
+
+    return temp
     
-    temp_stack = Stack()
-    offset = 0
-    # loop through all values as min in stack
-    while offset != len(stack):
-        min = stack.stack[len(stack) - offset - 1]
-        for i in range(len(stack)):
-            if i >= offset:
-                curr = stack.peek()
-                if curr < min:
-                    min = curr
-            temp_stack.push(stack.pop())
-        # Add everything back to stack and then push on the min value at the top. Make sure to account for duplicates.
-        min_ct = 0
-        while not temp_stack.isEmpty():
-            # Skip item if it's equal to min since we'll push them onto the top at the end
-            if temp_stack.peek() == min:
-                min_ct += 1
-                temp_stack.pop()
-            else:
-                stack.push(temp_stack.pop())
-        # Push on the min values onto the top
-        for i in range(min_ct):
-            stack.push(min)
-        # add to offset
-        offset += min_ct
+
 
 if __name__ == "__main__":
-    stack = Stack()
-    stack.push(4)
-    stack.push(2)
-    stack.push(5)
-    stack.push(1)
-    stack.push(3)
-    stack.push(3)
-    stack.push(1)
-    stack.push(1)
-    sort_stack(stack)
-    print(stack.stack)
+    stack = []
+    stack.append(4)
+    stack.append(2)
+    stack.append(5)
+    stack.append(1)
+    stack.append(3)
+    stack.append(3)
+    stack.append(1)
+    stack.append(1)
+    stack = sort_stack(stack)
+    print(stack)
 

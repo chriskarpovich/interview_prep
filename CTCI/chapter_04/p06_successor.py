@@ -4,43 +4,6 @@ its parent.
 """
 from binary_tree import BinarySearchTree
 
-def in_order_successor(query):
-    # in-order traversal of a tree
-    # find root
-    root = query
-    while root.parent != None:
-        root = root.parent
-    def helper(node):
-        if not node:
-            return
-        left = helper(node.left)
-        if left:
-            return left
-        # visit node
-        if node.value > query.value:
-            return node
-        right = helper(node.right)
-        if right:
-            return right
-    return helper(root)
-
-def in_order_successor_iter(query):
-    # return leftmost node on the right branch
-    if query.right:
-        node = query.right
-        while node.left:
-            node = node.left
-        return node
-    # if no right node, then go up from parent until you hit a left
-    else:
-        ancestor = query.parent
-        child = query
-        while ancestor and not ancestor.left == child:
-            child = ancestor
-            ancestor = ancestor.parent
-        return ancestor
-    
-
 
 
 def test_in_order_successor():

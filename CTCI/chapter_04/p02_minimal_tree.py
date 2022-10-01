@@ -4,17 +4,16 @@ Given a sorted (increasing order) array with unique integer elements, write an a
 from binary_tree import Node
 import math
 
-def array_to_binary_tree(array, L, R):
-    # base case
-    if R < L:
-        return None
-    mid = math.floor((L+R)/2)
+def array_to_binary_tree(array, l, r):
+    def helper(node):
+        if l == r:
+            
+        mid = (l + r) // 2
+        node = Node(value=array[mid])
+        node.left = helper(array, l, mid)
+        node.right = helper(array, l+1, r)
+        return node
 
-    node = Node(value=array[mid])
-    node.left = array_to_binary_tree(array, L, mid-1)
-    node.right = array_to_binary_tree(array, mid+1, R)
-
-    return node
 
 
 def printTree(node, level=0):

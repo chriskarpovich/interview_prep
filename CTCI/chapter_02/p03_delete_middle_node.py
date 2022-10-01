@@ -7,19 +7,15 @@ Result: nothing is returned, but the new linked list looks like a->b->d->e->f
 
 from linked_list import *
 
-# def delete_middle_node(node):
-#     # copy over the elements to make the list look like the final answer and make the last node None
-#     while True:
-#         node.value = node.next.value
-#         if node.next.next == None:
-#             node.next = None
-#             return
-#         node = node.next
-#     return
-
 def delete_middle_node(node):
-    node.value = node.next.value
-    node.next = node.next.next
+    # change the value of the node
+    while node.next:
+        node.value = node.next.value
+        # delete the last node, since it's not necessary
+        if not node.next.next:
+            node.next = None
+        else:
+            node = node.next
 
 
 def main():
